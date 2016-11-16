@@ -10,13 +10,12 @@ import {
 } from 'react-native'
 
 class Modal extends Component {
-   constructor() {
-      super();
+   constructor(props) {
+      super(props);
 
       this.state = {
          opacity: new Animated.Value(0),
-         scale: new Animated.Value(0.8),
-         offset: new Animated.Value(0)
+         offset: new Animated.Value(0) 
       };
    }
    componentWillReceiveProps(props) {
@@ -57,14 +56,6 @@ class Modal extends Component {
             }
          ).start();
 
-         Animated.spring(
-            this.state.scale,
-            {
-               toValue: toValue ? 1 : 0.8,
-               tension: animationTension
-            }
-         ).start();
-
          setTimeout(() => {
             if (toValue)
                this.props.modalDidOpen();
@@ -76,7 +67,7 @@ class Modal extends Component {
       }
    }
    render() {
-      const {opacity, open, scale, offset, children} = this.state;
+      const {opacity, open, offset, children} = this.state;
       let containerStyles = [styles.absolute, styles.container, this.props.containerStyle];
 
       if (!this.state.open) {
@@ -98,7 +89,7 @@ class Modal extends Component {
                style={[
                   styles.defaultModalStyle,
                   this.props.modalStyle,
-                  {opacity, transform: [{scale}, {translateY: offset}]}
+                  {opacity, transform: [{translateY: offset}]}
                ]}>
                {children}
             </Animated.View>
